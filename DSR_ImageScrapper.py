@@ -140,7 +140,7 @@ def main():
             for equipment in equipment_categories:
                 equipment.find_img_src()
         elif user_input == '8':
-            break
+            raise SystemExit
         else:
             print(f"Invalid input. Please enter a digit from 1-{len(equipment_categories) + 2}.")
 
