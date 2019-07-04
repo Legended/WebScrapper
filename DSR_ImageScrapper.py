@@ -142,7 +142,7 @@ def main():
         elif user_input == '8':
             break
         else:
-            print('Invalid input. Please enter a digit from 1-5.')
+            print(f"Invalid input. Please enter a digit from 1-{len(equipment_categories) + 2}.")
 
 
 dsr_page = 'https://darksouls.wiki.fextralife.com'
