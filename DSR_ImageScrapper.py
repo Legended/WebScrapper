@@ -120,8 +120,8 @@ def main():
             '3. Download Shield Images',
             '4. Download Armor Images ',
             '5. Download Ring Images  ',
-            '6. Download Items        ',
-            '7. Download All          ',
+            '6. Download Item Images  ',
+            '7. Download All Images   ',
             '8. Exit                  ',
             '-' * 50))
         if user_input == '1':
