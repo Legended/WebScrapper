@@ -73,7 +73,7 @@ class PrepIMGFiles:
         print(f'\nFetching data for {self.folder_name}...')
         data = [soup(requests.get(value).text, 'html.parser') for value in self.category.values()]
 
-        self.create_directories()
+        self.create_folder_for_content()
 
         print('Fetching images from data...\n')
         for items in data:
@@ -91,7 +91,7 @@ class PrepIMGFiles:
                         pass
         print('Downloads for spells complete!')
 
-    def create_directories(self):
+    def create_folder_for_content(self):
         """Creates a folder for storing downloaded images."""
         if path.isdir(self.folder_name) is False:
             print('Creating directory for images...')
