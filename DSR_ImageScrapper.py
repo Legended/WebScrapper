@@ -13,7 +13,6 @@ class GetImageFile:
 
     def __init__(self, folder, url, url_path):
         """
-
         :param folder: Folder for storing downloaded image files.
         :param url: Homepage for website.
         :param url_path: URL path mainly used for concatenation with url param.
@@ -33,7 +32,6 @@ class GetImageFile:
             with open(f"{self.folder}/{self.file_name}", 'wb') as f:
                 print(f"Downloading {self.file_name}...")
                 f.write(requests.get(self.url + self.url_path).content)
-                f.close()
                 print(f"Downloaded {self.file_name} successful!")
         except (gaierror, NewConnectionError, MaxRetryError, ConnectionError):
             print(f"Error! Attempting to download from {self.url_path}...")
@@ -46,7 +44,6 @@ class GetImageFile:
             with open(f"{self.folder}/{self.file_name}", 'wb') as f:
                 print(f"Downloading {self.file_name}...")
                 f.write(requests.get(self.url_path).content)
-                f.close()
                 print(f"Downloaded {self.file_name} successful!")
         except:
             print(f"Failed to download {self.file_name}. Skipping download.")
@@ -56,7 +53,6 @@ class PrepIMGFiles:
 
     def __init__(self, category, folder_name, tag):
         """
-
         :param category: URL values from 'dsr_equipment' used to create BeautifulSoup objects.
         :param folder_name: Folder name for storing downloaded image files.
         :param tag: HTML tag which contains <img src=...>.
@@ -110,11 +106,10 @@ def main():
 
     # Set format string for 'user_input' based on the number of objects in 'equipment_categories'.
     options_fmt = '\n|{:^50}|' * (len(equipment_categories) + 2)
-    fmt = f"\n+{{}}+{options_fmt}\n+{{}}+\nChoose Option: "
+    fmt = f"\n+{'-' * 50}+{options_fmt}\n+{'-' * 50}+\nChoose Option: "
 
     while True:
         user_input = input(fmt.format(
-            '-' * 50,
             '1. Download Spell Images ',
             '2. Download Weapon Images',
             '3. Download Shield Images',
@@ -122,26 +117,25 @@ def main():
             '5. Download Ring Images  ',
             '6. Download Item Images  ',
             '7. Download All Images   ',
-            '8. Exit                  ',
-            '-' * 50))
-        if user_input == '1':
-            equipment_categories[0].find_img_src()  # Spells
-        elif user_input == '2':
-            equipment_categories[1].find_img_src()  # Weapons
-        elif user_input == '3':
-            equipment_categories[2].find_img_src()  # Shields
-        elif user_input == '4':
-            equipment_categories[3].find_img_src()  # Armor
-        elif user_input == '5':
-            equipment_categories[4].find_img_src()  # Rings
-        elif user_input == '6':
-            equipment_categories[5].find_img_src()  # Items
-        elif user_input == '7':
+            '8. Exit                  '
+        ))
+
+        # Gives all objects in 'equipment_categories' an index to choose from for 'user_input'.
+        for index, equipment in enumerate(equipment_categories, 1):
+            if user_input == str(index):
+                equipment.find_img_src(); break
+
+        # Download all images.
+        if user_input == str(len(equipment_categories) + 1):
             for equipment in equipment_categories:
                 equipment.find_img_src()
-        elif user_input == '8':
+
+        # Exits the program.
+        if user_input == str(len(equipment_categories) + 2):
             raise SystemExit
-        else:
+
+        # Print error if an invalid input is entered.
+        if user_input not in [str(num + 1) for num in range(len(equipment_categories) + 2)]:
             print(f"Invalid input. Please enter a digit from 1-{len(equipment_categories) + 2}.")
 
 
