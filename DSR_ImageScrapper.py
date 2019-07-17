@@ -7,6 +7,7 @@ from bs4 import BeautifulSoup as soup
 from socket import gaierror
 from urllib3.exceptions import NewConnectionError, MaxRetryError
 from requests.exceptions import ConnectionError
+from contextlib import suppress
 
 
 class GetImageFile:
@@ -75,16 +76,12 @@ class PrepIMGFiles:
         for items in data:
             try:
                 for _tag in items.find_all(self.tag):
-                    try:
+                    with suppress(AttributeError, TypeError):
                         GetImageFile(self.folder_name, dsr_page, _tag.a.img['src']).download_content()
-                    except (AttributeError, TypeError):
-                        pass
             except KeyError:
                 for _tag in items.find_all(*self.tag):
-                    try:
+                    with suppress(AttributeError, TypeError):
                         GetImageFile(self.folder_name, dsr_page, _tag.a.img['src']).download_content()
-                    except (AttributeError, TypeError):
-                        pass
         print('Downloads for spells complete!')
 
     def create_folder_for_content(self):
